@@ -2,6 +2,7 @@ package com.edusystem.eduplatform.secure.notes.Models;
 
 
 import com.edusystem.eduplatform.secure.notes.Models.enums.Roles;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Role {
     private Roles roleName;
 
     // علاقة One-to-Many مع User
+    @JsonIgnore
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
 
