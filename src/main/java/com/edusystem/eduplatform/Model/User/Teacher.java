@@ -19,9 +19,6 @@ public class Teacher {
     @OneToOne
      private User user;
 
-    private Long views;
-
-    private Long AllStudents;
 
     @OneToMany
     private List<Course> courses;

@@ -21,8 +21,12 @@ import java.time.LocalDateTime;
         }
 )
 @Data
-@NoArgsConstructor
 public class User {
+
+
+    public User() {
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

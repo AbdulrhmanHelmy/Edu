@@ -14,7 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "roles")
 @Data
-@NoArgsConstructor
 public class Role {
 
     @Id
@@ -57,5 +56,8 @@ public class Role {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Role() {
     }
 }
