@@ -36,7 +36,7 @@ public class Student {
     private Double averageScore = 0.0;
     private Integer completedCoursesCount = 0;
     private Double progressPercentage = 0.0;
-
+private Double balance = 0.0;
 
     private Long totalWatchTime = (long) 0;
     private Long points = (long) 0;

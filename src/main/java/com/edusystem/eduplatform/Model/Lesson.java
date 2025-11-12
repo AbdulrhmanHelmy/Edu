@@ -4,6 +4,9 @@ import com.edusystem.eduplatform.Model.User.Student;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,7 +23,9 @@ public class Lesson {
     private String imageUrl;
 
     private int lessonOrder;
-
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime uploadDate;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

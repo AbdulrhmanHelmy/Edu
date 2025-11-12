@@ -5,7 +5,9 @@ import com.edusystem.eduplatform.Model.User.Teacher;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,9 @@ public class Course {
 
     private String name;
     private String description;
-
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
     @ManyToOne
     @JoinColumn(name = "level_id")
     private Level level;
