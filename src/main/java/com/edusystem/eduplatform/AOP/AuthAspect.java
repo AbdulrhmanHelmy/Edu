@@ -26,12 +26,11 @@ public class AuthAspect {
         String methodName = joinPoint.getSignature().getName();
 
         Object[] args = joinPoint.getArgs();
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = (auth != null) ? auth.getName() : "Anonymous";
 
         System.out.println("🔐 [AUTH] Executing method: " + methodName);
-        System.out.println("👤 [USER]  Logged in as: " + username);
+        System.out.println("👤 [USER]  Logged in as: " +Arrays.toString(args).substring(23,Arrays.toString(args).indexOf(',')));
         System.out.println("📦 [PARAMS] " + Arrays.toString(args));
 
         Object result;

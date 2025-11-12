@@ -52,8 +52,6 @@ public class User {
 
     @Column(name = "imageUrl")
     private String imageUrl;
-    @Column(name = "points")
-    private Integer points;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
@@ -119,13 +117,7 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
-    public Integer getPoints() {
-        return points;
-    }
 
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
 
     public Role getRole() {
         return role;

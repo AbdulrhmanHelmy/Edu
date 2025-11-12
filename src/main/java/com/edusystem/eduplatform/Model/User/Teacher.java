@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,14 +14,14 @@ import java.util.List;
 @Setter
 public class Teacher {
     @Id
-    @GeneratedValue( strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-     private User user;
+    private User user;
 
+    private String userName;
 
-    @OneToMany
-    private List<Course> courses;
-
+    @OneToMany(mappedBy = "teacher")
+    private List<Course> courses = new ArrayList<>();
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,21 +21,28 @@ public class Student {
     @OneToOne
     private User user;
 
-    @OneToMany
-    private List<Course> courses;
+    @ManyToMany
+    @JoinTable(
+            name = "student_course", // اسم الجدول الوسيط
+            joinColumns = @JoinColumn(name = "student_id"), // العمود الذي يشير للطالب
+            inverseJoinColumns = @JoinColumn(name = "course_id") // العمود الذي يشير للكورس
+    )
+    private List<Course> courses = new ArrayList<>();
 
-    @OneToMany // محتاج ريفرس قبل ما نرجعه
-    private List<Lesson> history;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Lesson> history = new ArrayList<>();
+
+    private String userName  ;
+    private Double averageScore = 0.0;
+    private Integer completedCoursesCount = 0;
+    private Double progressPercentage = 0.0;
 
 
-    private Double averageScore;
-    private Integer completedCoursesCount;
-    private Double progressPercentage;
-
-
-    private Long totalWatchTime;
-    private Long points;
-    private Long streakDays;
+    private Long totalWatchTime = (long) 0;
+    private Long points = (long) 0;
+    private Long streakDays = (long) 0;
 
 
 }
+
+

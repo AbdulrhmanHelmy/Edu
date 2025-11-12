@@ -1,4 +1,4 @@
-package com.edusystem.eduplatform.Service.Teacher;
+package com.edusystem.eduplatform.Services;
 
 import com.edusystem.eduplatform.Exception.ResourceNotFoundException;
 import com.edusystem.eduplatform.Model.Course;

@@ -21,7 +21,6 @@ public class UserDetailsImpl implements UserDetails {
     private Integer id;
     private String username;
     private String email;
-
     @JsonIgnore
     private String password;
 
@@ -30,7 +29,7 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Integer id, String username, String email, String password,
-                           boolean is2faEnabled, Collection<? extends GrantedAuthority> authorities) {
+                           boolean is2faEnabled, Collection<? extends GrantedAuthority> authorities ) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -48,7 +47,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.isTwoFactorEnabled(),
-                List.of(authority) // Wrapping the single authority in a list
+                List.of(authority)
         );
     }
 

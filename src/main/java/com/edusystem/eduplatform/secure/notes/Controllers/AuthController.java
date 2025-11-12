@@ -1,5 +1,9 @@
 package com.edusystem.eduplatform.secure.notes.Controllers;
 
+import com.edusystem.eduplatform.Model.User.Student;
+import com.edusystem.eduplatform.Model.User.Teacher;
+import com.edusystem.eduplatform.Repository.StudentRepository;
+import com.edusystem.eduplatform.Repository.TeacherRepository;
 import com.edusystem.eduplatform.secure.notes.DTO.LoginRequest;
 import com.edusystem.eduplatform.secure.notes.DTO.SignupRequest;
 import com.edusystem.eduplatform.secure.notes.Models.Role;
@@ -36,9 +40,13 @@ public class AuthController {
 
     @Autowired
     private UserRepo userRepository;
+    @Autowired
+    TeacherRepository teacherRepository;
 
     @Autowired
     private RoleRepo roleRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -68,9 +76,8 @@ public class AuthController {
         }
     }
 
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+    @PostMapping("/signup/student")
+    public ResponseEntity<?> registerStudent(@RequestBody SignupRequest signUpRequest) {
 
         if (userRepository.existsByUserName(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -84,15 +91,61 @@ public class AuthController {
                     .body("Error: Email is already in use!");
         }
 
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(
+                signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                passwordEncoder.encode(signUpRequest.getPassword()));
+                passwordEncoder.encode(signUpRequest.getPassword())
+        );
 
         Role userRole = roleRepository.findByRoleName(Roles.STUDENT)
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         user.setRole(userRole);
 
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+        user = userRepository.save(user);
+
+        Student student = new Student();
+        student.setUser(user);
+        student.setUserName(user.getUserName());
+
+        studentRepository.save(student);
+
+        return ResponseEntity.ok("student registered successfully!");
+    }
+
+    @PostMapping("/signup/teacher")
+    public ResponseEntity<?> registerTeacher(@RequestBody SignupRequest signUpRequest) {
+
+        if (userRepository.existsByUserName(signUpRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: Username is already taken!");
+        }
+
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: Email is already in use!");
+        }
+
+        User user = new User(
+                signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                passwordEncoder.encode(signUpRequest.getPassword())
+        );
+
+        Role userRole = roleRepository.findByRoleName(Roles.TEACHER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        user.setRole(userRole);
+
+        user = userRepository.save(user);
+
+
+        Teacher teacher = new Teacher();
+        teacher.setUser(user);
+        teacher.setUserName(user.getUserName());
+
+        teacherRepository.save(teacher);
+
+        return ResponseEntity.ok("Teacher registered successfully!");
     }
 }

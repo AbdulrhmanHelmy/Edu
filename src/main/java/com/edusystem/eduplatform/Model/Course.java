@@ -1,10 +1,12 @@
 package com.edusystem.eduplatform.Model;
 
+import com.edusystem.eduplatform.Model.User.Student;
 import com.edusystem.eduplatform.Model.User.Teacher;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,24 +14,27 @@ import java.util.List;
 @Setter
 public class Course {
     @Id
-    @GeneratedValue( strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String description;
-    @ManyToOne()
-    private Level level;
-
-    @OneToOne
-    private Subject subject;
-
-
 
     @ManyToOne
+    @JoinColumn(name = "level_id")
+    private Level level;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students = new ArrayList<>();
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lesson> lessonList;
-
-
-
+    private List<Lesson> lessonList = new ArrayList<>();
 }
