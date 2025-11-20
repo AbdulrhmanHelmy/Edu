@@ -18,25 +18,24 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @ManyToMany
     @JoinTable(
-            name = "student_course", // اسم الجدول الوسيط
-            joinColumns = @JoinColumn(name = "student_id"), // العمود الذي يشير للطالب
-            inverseJoinColumns = @JoinColumn(name = "course_id") // العمود الذي يشير للكورس
+            name = "student_course",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Course> courses = new ArrayList<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Lesson> history = new ArrayList<>();
 
-    private String userName  ;
     private Double averageScore = 0.0;
     private Integer completedCoursesCount = 0;
     private Double progressPercentage = 0.0;
-private Double balance = 0.0;
+    private Double balance = 0.0;
 
     private Long totalWatchTime = (long) 0;
     private Long points = (long) 0;

@@ -105,7 +105,6 @@ public class AuthController {
 
         Student student = new Student();
         student.setUser(user);
-        student.setUserName(user.getUserName());
 
         studentRepository.save(student);
 

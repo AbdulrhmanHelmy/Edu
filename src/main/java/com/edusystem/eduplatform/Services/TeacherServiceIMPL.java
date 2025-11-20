@@ -9,6 +9,7 @@ import com.edusystem.eduplatform.secure.notes.Models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherServiceIMPL implements TeacherService {
@@ -31,13 +32,18 @@ public class TeacherServiceIMPL implements TeacherService {
     }
 
     @Override
+    public Optional<Teacher> findById(Long id)  {
+        return teacherRepository.findById(id);
+    }
+
+    @Override
     public Teacher update(Teacher teacher) {
         return null;
     }
 
     @Override
     public void delete(Teacher teacher) {
-
+teacherRepository.delete(teacher);
     }
 
     @Override

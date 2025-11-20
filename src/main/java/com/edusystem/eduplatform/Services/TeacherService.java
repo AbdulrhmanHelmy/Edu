@@ -6,10 +6,12 @@ import com.edusystem.eduplatform.Model.Lesson;
 import com.edusystem.eduplatform.Model.User.Teacher;
 import com.edusystem.eduplatform.secure.notes.Models.User;
 import java.util.List;
+import java.util.Optional;
 
 public interface TeacherService {
     Teacher findByUser(User user) throws ResourceNotFoundException;
     Teacher save(Teacher teacher);
+    Optional<Teacher> findById(Long id) ;
     Teacher update(Teacher teacher);
     void delete(Teacher teacher);
     List<Teacher> findAll();
